@@ -34,8 +34,8 @@ namespace SkeletalTracking
         Runtime nui;
 
         //hand positions
-        Point curHandPoint, lastHandPoint;
-        int leftCount = 0;
+        //Point curHandPoint, lastHandPoint;
+        //int leftCount = 0;
 
         //Targets and skeleton controller
         SkeletonController exampleController;
@@ -144,18 +144,32 @@ namespace SkeletalTracking
 
                 if (targets[1].isSelected())
                 {
-                    if (lastHandPoint == null) lastHandPoint = handPosition;
-                    curHandPoint = handPosition;
-
-                    if (curHandPoint.X - lastHandPoint.X < 0)
+                    // check if any objects selected
+                    for (int i = 2; i <= 5; i++)
                     {
-                        leftCount++; //swipe left
+                        if (targets[i].isSelected()) break;
                     }
 
-                    if (leftCount > 100)
+                    if (yourController2.lastHandPoint == null) yourController2.lastHandPoint = handPosition;
+                    yourController2.curHandPoint = handPosition;
+
+                    if (yourController2.curHandPoint.X - yourController2.lastHandPoint.X < 0)
+                    {
+                        yourController2.leftCount++; //swipe left
+                    }
+
+                    if (yourController2.leftCount > 20)
                     {
                         // swipe left
-                        targets[2].setTargetHighlighted();
+                        for (int j = 2; j <= 5; j++)
+                        {
+                            if (targets[j].isSelected()) 
+                            {
+                                //do nothing right now
+                            }
+                        }
+                        targets[5].hideTarget();
+
                     }
                 }
                 //set positions on our joints of interest (already defined as Ellipse objects in the xaml)
