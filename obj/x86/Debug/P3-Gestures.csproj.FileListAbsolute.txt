@@ -58,3 +58,18 @@ C:\Users\Huyen Tran\Downloads\247 downloads\p3\P3StarterCode\obj\x86\Debug\Skele
 C:\Users\Huyen Tran\Downloads\247 downloads\p3\P3StarterCode\obj\x86\Debug\SkeletalTracking.Properties.Resources.resources
 C:\Users\Huyen Tran\Downloads\247 downloads\p3\P3StarterCode\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\Huyen Tran\Downloads\247 downloads\p3\P3StarterCode\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\SkeletalTracking.exe
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\SkeletalTracking.pdb
+C:\Users\hyunggu\Documents\P3StarterCode\bin\Debug\SkeletalTracking.exe
+C:\Users\hyunggu\Documents\P3StarterCode\bin\Debug\SkeletalTracking.pdb
+C:\Users\hyunggu\Documents\P3StarterCode\bin\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\hyunggu\Documents\P3StarterCode\bin\Debug\Coding4Fun.Kinect.Wpf.pdb
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\MainWindow.baml
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\MainWindow.g.cs
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\App.g.cs
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\SkeletalTracking_MarkupCompile.cache
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\SkeletalTracking.g.resources
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\SkeletalTracking.Properties.Resources.resources
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\hyunggu\Documents\P3StarterCode\obj\x86\Debug\GenerateResource.write.1.tlog

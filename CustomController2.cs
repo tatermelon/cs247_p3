@@ -29,43 +29,39 @@ namespace SkeletalTracking
 
         public override void processSkeletonFrame(SkeletonData skeleton, Dictionary<int, Target> targets)
         {
-
-            /* YOUR CODE HERE*/
             //Scale the joints to the size of the window
             Joint leftHand = skeleton.Joints[JointID.HandLeft].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
             Joint rightHand = skeleton.Joints[JointID.HandRight].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
-
+            
+            // Selecting "container" or "clutch" (i.e. target 1)
             if (targets[1].isSelected())
             {
-                targets[1].setTargetPosition(leftHand.Position.X-40, leftHand.Position.Y-40);
+                targets[1].setTargetPosition(leftHand.Position.X - 40, leftHand.Position.Y - 40);
+            }
+            else  // else, check whether 1 is selected
+            {
+                //Calculate how far our left hand is from the target in both x and y directions
+                double deltaX_left = Math.Abs(leftHand.Position.X - targets[1].getXPosition());
+                double deltaY_left = Math.Abs(leftHand.Position.Y - targets[1].getYPosition());
+                if (deltaX_left < 15 && deltaY_left < 15)
+                {
+                    targets[1].setTargetSelected(); // select target 1 (container)
+
+                    //show other targets (objects)
+                    targets[2].showTarget();
+                    targets[3].showTarget();
+                    targets[4].showTarget();
+                    targets[5].showTarget();
+                }
             }
 
+            // Selecting "files" or "photos" (i.e. targets 2-5)
             foreach (var target in targets)
             {
                 Target cur = target.Value;
                 int targetID = cur.id; //ID in range [1..5]
 
-                if (targetID == 1)
-                {
-                    //Calculate how far our left hand is from the target in both x and y directions
-                    double deltaX_left = Math.Abs(leftHand.Position.X - cur.getXPosition());
-                    double deltaY_left = Math.Abs(leftHand.Position.Y - cur.getYPosition());
-                    if (deltaX_left < 15 && deltaY_left < 15)
-                    {
-                        cur.setTargetSelected(); // select target 1 (container)
-
-                        //show other targets (objects)
-                        targets[2].showTarget();
-                        targets[2].setTargetPosition(400, 80);
-                        targets[3].showTarget();
-                        targets[3].setTargetPosition(400, 180);
-                        targets[4].showTarget();
-                        targets[4].setTargetPosition(400, 260);
-                        targets[5].showTarget();
-                        targets[5].setTargetPosition(400, 350);
-                    }
-                }
-                else
+                if (targetID != 1)
                 {
                     //Calculate how far our right hand is from the target in both x and y directions
                     double deltaX_right = Math.Abs(rightHand.Position.X - cur.getXPosition());
@@ -76,21 +72,34 @@ namespace SkeletalTracking
                         cur.setTargetSelected();
                     }
                 }
+            }
 
+            // Tracks the swipe gesture to "disappear" selected items
+            Point handPosition;
+            Joint handJoint = skeleton.Joints[JointID.HandRight];
+            handPosition = new Point(handJoint.Position.X, handJoint.Position.Y);
 
-                
+            if (targets[1].isSelected())
+            {
+                if (lastHandPoint == null) lastHandPoint = handPosition;
+                curHandPoint = handPosition;
 
-                
+                if (curHandPoint.X - lastHandPoint.X < 0)
+                {
+                    leftCount++; //swipe left
+                }
 
-                //If we have a hit in a reasonable range, highlight the target
-                //if (deltaX_left < 15 && deltaY_left < 15 || deltaX_right < 15 && deltaY_right < 15 && targetID == 1)
-                //{
-                    
-                //}
-               // else
-                //{
-                  //  cur.setTargetUnselected();
-                //}
+                if (leftCount > 15)
+                {
+                    // swipe left
+                    for (int j = 2; j <= 5; j++)
+                    {
+                        if (targets[j].isSelected())
+                        {
+                            targets[j].hideTarget();
+                        }
+                    }
+                }
             }
 
 
@@ -106,6 +115,17 @@ namespace SkeletalTracking
             targets[3].hideTarget();
             targets[4].hideTarget();
             targets[5].hideTarget();
+
+            targets[2].setTargetPosition(400, 80);
+            targets[3].setTargetPosition(400, 180);
+            targets[4].setTargetPosition(400, 260);
+            targets[5].setTargetPosition(400, 350);
         }
+
+        public void processController2(SkeletonData skeleton, Dictionary<int, Target> targets)
+        {
+            
+        }
+
     }
 }
