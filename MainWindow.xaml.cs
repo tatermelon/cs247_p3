@@ -40,7 +40,7 @@ namespace SkeletalTracking
         //Targets and skeleton controller
         SkeletonController exampleController;
         CustomController1 yourController1;
-        CustomController1 yourController2;
+        CustomController2 yourController2;
 
         //Holds the currently active controller
         SkeletonController currentController;
@@ -57,7 +57,7 @@ namespace SkeletalTracking
             SetupKinect();
             exampleController = new SkeletonController(this);
             yourController1 = new CustomController1(this);
-            yourController2 = new CustomController1(this);
+            yourController2 = new CustomController2(this);
             currentController = exampleController;
             InitTargets();
             i = 0;
@@ -158,35 +158,6 @@ namespace SkeletalTracking
                 rightShoulderPosition.X = 0;
                 leftShoulderPosition.X = 0;
 
-                /*
-                if (rightShoulderPosition.Y > leftShoulderPosition.Y)
-                {
-                    targets[1].setTargetHighlighted();
-                }
-                else if(rightShoulderPosition.Y <= leftShoulderPosition.Y)
-                {
-                    targets[5].setTargetHighlighted();
-                }
-                */
-          
-
-                //if (targets[1].isSelected())
-                //{
-                //    if (lastHandPoint == null) lastHandPoint = handPosition;
-                //    curHandPoint = handPosition;
-
-                //    if (curHandPoint.X - lastHandPoint.X < 0)
-                //    {
-                //        leftCount++; //swipe left
-                //    }
-
-                //    if (leftCount > 100)
-                //    {
-                //        // swipe left
-                //        targets[2].setTargetHighlighted();
-                //    }
-                //}
-                //set positions on our joints of interest (already defined as Ellipse objects in the xaml)
                 SetEllipsePosition(headEllipse, skeleton.Joints[JointID.Head]);
                 SetEllipsePosition(leftEllipse, skeleton.Joints[JointID.HandLeft]);
                 SetEllipsePosition(rightEllipse, skeleton.Joints[JointID.HandRight]);
