@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="480" Width="640" Closed="Window_Closed" Loaded="Window_Loaded" KeyDown="Window_KeyDown">
     <Canvas Name="MainCanvas" Height="480" Width="640">
-        <Image Opacity="0.1" Canvas.Left="0" Canvas.Top="0" Height="480 " Name="image1" Stretch="Fill" Width="640" />
+        <Image Opacity="0.9" Canvas.Left="0" Canvas.Top="0" Height="480 " Name="image1" Stretch="Fill" Width="640" />
         <Ellipse Canvas.Left="270" Canvas.Top="126" Height="50" Name="headEllipse" Stroke="Black" Width="50" Fill="Orange" />
         <Ellipse Canvas.Left="384" Canvas.Top="253" Height="35" Name="rightEllipse" Stroke="Black" Width="35" Fill="Blue" />
         <Ellipse Canvas.Left="158" Canvas.Top="253" Fill="Blue" Height="35" Name="leftEllipse" Stroke="Black" Width="35" />
@@ -94,5 +94,9 @@
         <Label Canvas.Left="0" Canvas.Top="0" Content="Current Controller:" Height="28" Name="label1" Width="108" />
         <Label Canvas.Left="103" Canvas.Top="0" Content="Example Controller" Height="28" Name="controllerText" Width="140" />
         <TextBlock Canvas.Left="377" Canvas.Top="5" Height="17" Name="textBlock1" Text="(Use keyboard {1, 2, 3} to change controllers)" Width="249" />
+        <Label Canvas.Left="30" Canvas.Top="350" Content="Left ShoulderZ:" Height="28" Name="leftShoulderText" Width="150" />
+        <Label Canvas.Left="430" Canvas.Top="350" Content="Right ShoulderZ:" Height="28" Name="rightShoulderText" Width="150" />
+        <Label Canvas.Left="30" Canvas.Top="370" Content="Left ShoulderX:" Height="28" Name="leftShoulderXText" Width="150" />
+        <Label Canvas.Left="430" Canvas.Top="370" Content="Right ShoulderX:" Height="28" Name="rightShoulderXText" Width="150" />
     </Canvas>
 </Window>

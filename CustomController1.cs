@@ -12,74 +12,86 @@ using Coding4Fun.Kinect.Wpf;
 namespace SkeletalTracking
 {
 
-    
+    // Controller 1: Shoulder-tracking of user orientation
     class CustomController1 : SkeletonController
     {
         private MainWindow window;
 
-        public CustomController1(MainWindow win) : base(win)
+        public CustomController1(MainWindow win)
+            : base(win)
         {
             window = win;
         }
 
         public override void processSkeletonFrame(SkeletonData skeleton, Dictionary<int, Target> targets)
         {
+            // Gets right shoulder position
+            Point rightShoulderPosition;
+            Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
+            rightShoulderPosition = new Point(rightShoulder.Position.X, rightShoulder.Position.Z);
 
-            /* YOUR CODE HERE*/
+            Point leftShoulderPosition;
+            Joint leftShoulder = skeleton.Joints[JointID.ShoulderLeft];
+            leftShoulderPosition = new Point(leftShoulder.Position.X, leftShoulder.Position.Z);
 
-            foreach (var target in targets)
+            double shoulderDifferential = leftShoulderPosition.Y - rightShoulderPosition.Y;
+
+            if (shoulderDifferential < -0.08)       // Rightmost (i.e. 5)
             {
-                Target cur = target.Value;
-                int targetID = cur.id; //ID in range [1..5]
-
-                //Scale the joints to the size of the window
-                //Joint leftHand = skeleton.Joints[JointID.HandLeft].ScaleTo(640, 480, 0.5f, 0.5f);
-                //Joint rightHand = skeleton.Joints[JointID.HandRight].ScaleTo(640, 480, 0.5f, 0.5f);
-                //Joint leftHand = skeleton.Joints[JointID.HandLeft].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
-                //Joint rightHand = skeleton.Joints[JointID.HandRight].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
-                Joint leftFoot = skeleton.Joints[JointID.FootLeft].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
-                Joint rightFoot = skeleton.Joints[JointID.FootRight].ScaleTo(640, 480, window.k_xMaxJointScale, window.k_yMaxJointScale);
-
-                //Calculate how far our left hand is from the target in both x and y directions
-                //double deltaX_left = Math.Abs(leftHand.Position.X - cur.getXPosition());
-                //double deltaY_left = Math.Abs(leftHand.Position.Y - cur.getYPosition());
-
-                //Calculate how far our right hand is from the target in both x and y directions
-                //double deltaX_right = Math.Abs(rightHand.Position.X - cur.getXPosition());
-                //double deltaY_right = Math.Abs(rightHand.Position.Y - cur.getYPosition());
-
-                //Calculate how far our left foot is from the target in both x and y directions
-                double deltaX_leftFoot = Math.Abs(leftFoot.Position.X - cur.getXPosition());
-                double deltaY_leftFoot = Math.Abs(leftFoot.Position.Y - cur.getYPosition());
-
-                //Calculate how far our right hand is from the target in both x and y directions
-                double deltaX_rightFoot = Math.Abs(rightFoot.Position.X - cur.getXPosition());
-                double deltaY_rightFoot = Math.Abs(rightFoot.Position.Y - cur.getYPosition());
-
-                //If we have a hit in a reasonable range, highlight the target
-                if (deltaX_leftFoot < 15 && deltaY_leftFoot < 15 || deltaX_rightFoot < 15 && deltaY_rightFoot < 15)
-                {
-                    cur.setTargetSelected();
-                }
-                else
-                {
-                    cur.setTargetUnselected();
-                }
+                targets[1].setTargetUnselected();
+                targets[2].setTargetUnselected();
+                targets[3].setTargetUnselected();
+                targets[4].setTargetUnselected();
+                targets[5].setTargetSelected();
             }
-
+            else if (shoulderDifferential < -0.025 && shoulderDifferential > -0.08)   // "4"
+            {
+                targets[1].setTargetUnselected();
+                targets[2].setTargetUnselected();
+                targets[3].setTargetUnselected();
+                targets[4].setTargetSelected();
+                targets[5].setTargetUnselected();
+            }
+            else if (shoulderDifferential > -0.025 && shoulderDifferential < 0.025)   // "3"
+            {
+                targets[1].setTargetUnselected();
+                targets[2].setTargetUnselected();
+                targets[3].setTargetSelected();
+                targets[4].setTargetUnselected();
+                targets[5].setTargetUnselected();
+            }
+            else if (shoulderDifferential > 0.025 && shoulderDifferential < 0.08)    // "2" 
+            {
+                targets[1].setTargetUnselected();
+                targets[2].setTargetSelected();
+                targets[3].setTargetUnselected();
+                targets[4].setTargetUnselected();
+                targets[5].setTargetUnselected();
+            }
+            else if (shoulderDifferential > 0.08)       // "1" or leftmost
+            {
+                targets[1].setTargetSelected();
+                targets[2].setTargetUnselected();
+                targets[3].setTargetUnselected();
+                targets[4].setTargetUnselected();
+                targets[5].setTargetUnselected();
+            }
         }
 
         public override void controllerActivated(Dictionary<int, Target> targets)
         {
-
-            /* YOUR CODE HERE */
             adjustScale(1.1f);
-            targets[5].setTargetPosition(30, 30);
-            targets[2].hideTarget();
-            //targets[2].showTarget();
-            //targets[5].isHidden();
-            targets[3].setTargetHighlighted();
-
+            targets[1].setTargetUnselected();
+            targets[1].showTarget();
+            targets[2].setTargetUnselected();
+            targets[2].showTarget();
+            targets[3].setTargetUnselected();
+            targets[3].showTarget();
+            targets[4].setTargetUnselected();
+            targets[4].showTarget();
+            targets[5].setTargetUnselected();
+            targets[5].showTarget();
+            targets[5].setTargetPosition(505, 220);
         }
     }
 }

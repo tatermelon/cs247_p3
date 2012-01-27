@@ -40,7 +40,7 @@ namespace SkeletalTracking
         //Targets and skeleton controller
         SkeletonController exampleController;
         CustomController1 yourController1;
-        CustomController2 yourController2;
+        CustomController1 yourController2;
 
         //Holds the currently active controller
         SkeletonController currentController;
@@ -57,7 +57,7 @@ namespace SkeletalTracking
             SetupKinect();
             exampleController = new SkeletonController(this);
             yourController1 = new CustomController1(this);
-            yourController2 = new CustomController2(this);
+            yourController2 = new CustomController1(this);
             currentController = exampleController;
             InitTargets();
             i = 0;
@@ -132,12 +132,60 @@ namespace SkeletalTracking
             SkeletonData skeleton = (from s in allSkeletons.Skeletons
                                      where s.TrackingState == SkeletonTrackingState.Tracked
                                      select s).FirstOrDefault();
-           
-
 
             if(skeleton != null)
             {
-               
+                // tracking hand position
+                Point handPosition;
+                Joint handJoint = skeleton.Joints[JointID.HandRight];
+                handPosition = new Point(handJoint.Position.X, handJoint.Position.Y);
+
+                Point rightShoulderPosition;
+                Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
+                rightShoulderPosition = new Point(rightShoulder.Position.X, rightShoulder.Position.Z);
+                rightShoulderText.Content = rightShoulderPosition.Y;
+                rightShoulderXText.Content = rightShoulderPosition.X;
+
+                Point leftShoulderPosition;
+                Joint leftShoulder = skeleton.Joints[JointID.ShoulderLeft];
+                leftShoulderPosition = new Point(leftShoulder.Position.X, leftShoulder.Position.Z);
+                leftShoulderText.Content = leftShoulderPosition.Y;
+                leftShoulderXText.Content = leftShoulderPosition.X;
+
+                rightShoulderPosition.Y = 0;
+                leftShoulderPosition.Y = 0;
+
+                rightShoulderPosition.X = 0;
+                leftShoulderPosition.X = 0;
+
+                /*
+                if (rightShoulderPosition.Y > leftShoulderPosition.Y)
+                {
+                    targets[1].setTargetHighlighted();
+                }
+                else if(rightShoulderPosition.Y <= leftShoulderPosition.Y)
+                {
+                    targets[5].setTargetHighlighted();
+                }
+                */
+          
+
+                //if (targets[1].isSelected())
+                //{
+                //    if (lastHandPoint == null) lastHandPoint = handPosition;
+                //    curHandPoint = handPosition;
+
+                //    if (curHandPoint.X - lastHandPoint.X < 0)
+                //    {
+                //        leftCount++; //swipe left
+                //    }
+
+                //    if (leftCount > 100)
+                //    {
+                //        // swipe left
+                //        targets[2].setTargetHighlighted();
+                //    }
+                //}
                 //set positions on our joints of interest (already defined as Ellipse objects in the xaml)
                 SetEllipsePosition(headEllipse, skeleton.Joints[JointID.Head]);
                 SetEllipsePosition(leftEllipse, skeleton.Joints[JointID.HandLeft]);
@@ -174,7 +222,7 @@ namespace SkeletalTracking
             Canvas.SetLeft(ellipse, scaledJoint.Position.X - (double)ellipse.GetValue(Canvas.WidthProperty) / 2 );
             Canvas.SetTop(ellipse, scaledJoint.Position.Y - (double)ellipse.GetValue(Canvas.WidthProperty) / 2);
             Canvas.SetZIndex(ellipse, (int) -Math.Floor(scaledJoint.Position.Z*100));
-            if (joint.ID == JointID.HandLeft || joint.ID == JointID.HandRight)
+            if (joint.ID == JointID.HandLeft || joint.ID == JointID.HandRight || joint.ID == JointID.ShoulderLeft || joint.ID == JointID.ShoulderRight)
             {   
                 byte val = (byte)(Math.Floor((joint.Position.Z - 0.8)* 255 / 2));
                 ellipse.Fill = new SolidColorBrush(Color.FromRgb(val, val, val));
