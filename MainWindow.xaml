@@ -98,5 +98,11 @@
         <Label Canvas.Left="430" Canvas.Top="350" Content="Right ShoulderZ:" Height="28" Name="rightShoulderText" Width="150" />
         <Label Canvas.Left="30" Canvas.Top="370" Content="Left ShoulderX:" Height="28" Name="leftShoulderXText" Width="150" />
         <Label Canvas.Left="430" Canvas.Top="370" Content="Right ShoulderX:" Height="28" Name="rightShoulderXText" Width="150" />
+        <Label Canvas.Left="12" Canvas.Top="80" Content="RightShoulder Y:" Height="28" Name="rightShoulderYText" Width="150" />
+        <Label Canvas.Left="12" Canvas.Top="62" Content="RightElbow Y:" Height="28" Name="rightElbowYText" Width="150" />
+        <Label Canvas.Left="12" Canvas.Top="28" Content="Head Y:" Height="28" Name="headYText" Width="150" />
+        <Label Canvas.Left="12" Canvas.Top="42" Content="RightHand:" Height="28" Name="rightHandYText" Width="150" />
+        <Label Canvas.Left="148" Canvas.Top="28" Content="DeltaX:" Height="28" Name="deltaXText" Width="150" />
+        <Label Canvas.Left="148" Canvas.Top="42" Content="DeltaY:" Height="28" Name="deltaYText" Width="150" />
     </Canvas>
 </Window>

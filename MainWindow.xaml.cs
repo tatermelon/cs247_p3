@@ -33,14 +33,11 @@ namespace SkeletalTracking
         //Kinect Runtime
         Runtime nui;
 
-        //hand positions
-        Point curHandPoint, lastHandPoint;
-        int leftCount = 0;
-
         //Targets and skeleton controller
         SkeletonController exampleController;
         CustomController1 yourController1;
         CustomController2 yourController2;
+        CustomController3 yourController3;
 
         //Holds the currently active controller
         SkeletonController currentController;
@@ -58,6 +55,7 @@ namespace SkeletalTracking
             exampleController = new SkeletonController(this);
             yourController1 = new CustomController1(this);
             yourController2 = new CustomController2(this);
+            yourController3 = new CustomController3(this);
             currentController = exampleController;
             InitTargets();
             i = 0;
@@ -136,15 +134,33 @@ namespace SkeletalTracking
             if(skeleton != null)
             {
                 // tracking hand position
-                Point handPosition;
+                Point rightHandPosition;
                 Joint handJoint = skeleton.Joints[JointID.HandRight];
-                handPosition = new Point(handJoint.Position.X, handJoint.Position.Y);
+                rightHandPosition = new Point(handJoint.Position.X, handJoint.Position.Y);
+                rightHandYText.Content = rightHandPosition.Y;
+
+                Point leftHandPosition;
+                Joint leftHandJoint = skeleton.Joints[JointID.HandLeft];
+                leftHandPosition = new Point(leftHandJoint.Position.X, leftHandJoint.Position.Y);
+                deltaXText.Content = Math.Abs(leftHandPosition.X - rightHandPosition.X);
+                deltaYText.Content = Math.Abs(leftHandPosition.Y - rightHandPosition.Y);
+
+                Point headPosition;
+                Joint headJoint = skeleton.Joints[JointID.Head];
+                headPosition = new Point(headJoint.Position.X, headJoint.Position.Y);
+                headYText.Content = headPosition.Y;
+
+                Point rightElbowPosition;
+                Joint rightElbowJoint = skeleton.Joints[JointID.ElbowRight];
+                rightElbowPosition = new Point(rightElbowJoint.Position.X, rightElbowJoint.Position.Y);
+                rightElbowYText.Content = rightElbowPosition.Y;
 
                 Point rightShoulderPosition;
                 Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
                 rightShoulderPosition = new Point(rightShoulder.Position.X, rightShoulder.Position.Z);
                 rightShoulderText.Content = rightShoulderPosition.Y;
                 rightShoulderXText.Content = rightShoulderPosition.X;
+                rightShoulderYText.Content = rightShoulder.Position.Y;
 
                 Point leftShoulderPosition;
                 Joint leftShoulder = skeleton.Joints[JointID.ShoulderLeft];
@@ -231,6 +247,12 @@ namespace SkeletalTracking
                 currentController.controllerActivated(targets);
             }
 
+            if (e.Key == Key.D4)
+            {
+                currentController = yourController3;
+                controllerText.Content = "Controller 3";
+                currentController.controllerActivated(targets);
+            }
         }
     }
 

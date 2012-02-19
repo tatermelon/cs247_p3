@@ -69,6 +69,7 @@
     </Compile>
     <Compile Include="CustomController1.cs" />
     <Compile Include="CustomController2.cs" />
+    <Compile Include="CustomController3.cs" />
     <Compile Include="SkeletonController.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
