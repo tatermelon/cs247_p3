@@ -43,6 +43,7 @@ namespace SkeletalTracking
                 targets[3].setTargetUnselected();
                 targets[4].setTargetUnselected();
                 targets[5].setTargetSelected();
+
             }
             else if (shoulderDifferential < -0.025 && shoulderDifferential > -0.08)   // "4"
             {
@@ -51,6 +52,7 @@ namespace SkeletalTracking
                 targets[3].setTargetUnselected();
                 targets[4].setTargetSelected();
                 targets[5].setTargetUnselected();
+
             }
             else if (shoulderDifferential > -0.025 && shoulderDifferential < 0.025)   // "3"
             {
@@ -59,6 +61,7 @@ namespace SkeletalTracking
                 targets[3].setTargetSelected();
                 targets[4].setTargetUnselected();
                 targets[5].setTargetUnselected();
+
             }
             else if (shoulderDifferential > 0.025 && shoulderDifferential < 0.08)    // "2" 
             {
@@ -75,6 +78,7 @@ namespace SkeletalTracking
                 targets[3].setTargetUnselected();
                 targets[4].setTargetUnselected();
                 targets[5].setTargetUnselected();
+
             }
         }
 
@@ -96,6 +100,10 @@ namespace SkeletalTracking
             targets[5].setTargetUnselected();
             targets[5].showTarget();
             targets[5].setTargetPosition(505, 220);
+            
+            // hide left, right
+            targets[6].hideTarget();
+            targets[7].hideTarget();
         }
     }
 }

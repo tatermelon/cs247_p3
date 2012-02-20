@@ -116,8 +116,10 @@ namespace SkeletalTracking
             targets[3].setTargetPosition(380, 150);
             targets[4].setTargetPosition(380, 225);
             targets[5].setTargetPosition(340, 290);
-            
 
+            // hide left, right
+            targets[6].hideTarget();
+            targets[7].hideTarget();
         }
     }
 }

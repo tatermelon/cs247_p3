@@ -53,12 +53,14 @@ namespace SkeletalTracking
                         targets[5].hideTarget();
 
                         // show Targets 1,2,3
-                        targets[1].setTargetUnselected();
-                        targets[2].setTargetUnselected();
-                        targets[3].setTargetUnselected();
+                        //targets[1].setTargetUnselected();
+                        //targets[2].setTargetUnselected();
+                        //targets[3].setTargetUnselected();
                         targets[1].showTarget();
                         targets[2].showTarget();
                         targets[3].showTarget();
+                        targets[6].showTarget();
+                        targets[7].showTarget();
 
                         // reset the count
                         selectCount = 0;
@@ -106,8 +108,34 @@ namespace SkeletalTracking
                     targets[3].setTargetUnselected();
                     targets[2].setTargetSelected();
                 }
+
+                // Detect left-right shoulder navigation
+                // Gets right shoulder position
+                Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
+                Point rightNav = new Point(rightShoulder.Position.X, rightShoulder.Position.Z);
+
+                Joint leftShoulder = skeleton.Joints[JointID.ShoulderLeft];
+                Point leftNav = new Point(leftShoulder.Position.X, leftShoulder.Position.Z);
+
+                double shoulderDifferential = leftNav.Y - rightNav.Y;
+
+                if (shoulderDifferential > 0.05)       // Right
+                {
+                    targets[6].setTargetSelected();
+                    targets[7].setTargetUnselected();
+                }
+                else if (shoulderDifferential < -0.05)       // Left
+                {
+                    targets[6].setTargetUnselected();
+                    targets[7].setTargetSelected();
+                }
+                else
+                {
+                    targets[6].setTargetUnselected();
+                    targets[7].setTargetUnselected();
+                }
+
                 // Detect Birdwatcher Gesture
-               
                 // Get head position
                 Point headPosition;
                 Joint head = skeleton.Joints[JointID.Head];
@@ -124,7 +152,7 @@ namespace SkeletalTracking
 
                 // Get right shoulder position
                 Point rightShoulderPosition;
-                Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
+                //Joint rightShoulder = skeleton.Joints[JointID.ShoulderRight];
                 rightShoulderPosition = new Point(rightShoulder.Position.X, rightShoulder.Position.Y);
                 
                 //Calculate how far our right hand is from target 5 in both x and y directions
@@ -154,6 +182,10 @@ namespace SkeletalTracking
                     targets[1].hideTarget();
                     targets[2].hideTarget();
                     targets[3].hideTarget();
+                    targets[6].setTargetUnselected();
+                    targets[7].setTargetUnselected();
+                    targets[6].hideTarget();
+                    targets[7].hideTarget();
                 }
             }
         }
@@ -175,6 +207,12 @@ namespace SkeletalTracking
             targets[5].setTargetUnselected();
             targets[5].hideTarget();
             targets[5].setTargetPosition(400, 150);
+
+            // show left-right directional targets
+            targets[6].setTargetUnselected();
+            targets[6].showTarget();
+            targets[7].setTargetUnselected();
+            targets[7].showTarget();
         }
     }
 }
